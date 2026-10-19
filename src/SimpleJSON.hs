@@ -1,5 +1,14 @@
+module SimpleJSON
+    ( JValue(..)
+    , getString
+    , getInt
+    , getDouble
+    , getBool
+    , getObject
+    , getArray
+    , isNull
+    ) where
 
-module SimpleJSON where
 
 -- Representa os diferentes tipos de valores JSON
 data JValue
@@ -22,14 +31,9 @@ getBool (JBool b) = Just b
 getBool _ = Nothing
 
 -- Extrai um numero inteiro de um valor JSON
+
 getInt :: JValue -> Maybe Int
-getInt (JNumber n)
-    | isInfinite n || isNaN n = Nothing
-    | n == fromIntegral (truncate n :: Integer)
-      && n >= fromIntegral (minBound :: Int)
-      && n < fromIntegral (maxBound :: Int) + 1
-        = Just (truncate n)
-    | otherwise = Nothing
+getInt (JNumber n) = Just (truncate n)
 getInt _ = Nothing
 
 -- Extrai um numero decimal de um valor JSON
