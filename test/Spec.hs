@@ -42,13 +42,32 @@ genJValue n
                          <*> genJValue tamanho))
 
 
--- Verifica se os valores gerados sao iguais a si mesmos
-prop_identidade :: JValue -> Bool
-prop_identidade valor = valor == valor
 
+-- Verifica se getBool recupera o booleano
+prop_getBool :: Bool -> Bool
+prop_getBool b =
+    getBool (JBool b) == Just b
+
+-- Verifica se getDouble recupera o numero
+prop_getDouble :: Double -> Bool
+prop_getDouble n =
+    getDouble (JNumber n) == Just n
+
+-- Verifica se getArray recupera os elementos
+prop_getArray :: [JValue] -> Bool
+prop_getArray valores =
+    getArray (JArray valores) == Just valores
+
+-- Verifica se isNull identifica valores nulos
+prop_isNull :: JValue -> Bool
+prop_isNull valor =
+    isNull valor == (valor == JNull)
 
 
 main :: IO ()
 main = do
     quickCheck prop_getString
-    quickCheck prop_identidade
+    quickCheck prop_getBool
+    quickCheck prop_getDouble
+    quickCheck prop_getArray
+    quickCheck prop_isNull
