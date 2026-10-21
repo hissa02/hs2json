@@ -2,6 +2,7 @@ module PrettyJSON
     ( renderJValue
     ) where
 
+import Prelude hiding ((<>))
 import SimpleJSON (JValue(..))
 import Prettify
 
@@ -27,8 +28,16 @@ field (k, v) = string k <> char ':' <> pretty v
 series :: Char -> Char -> (a -> Doc) -> [a] -> Doc
 series open close f xs =
     char open <>
-    (if null xs then empty else line <> indent 2 (vsep (map f xs)) <> line) <>
+    (if null xs
+        then empty
+        else indent 2 (line <> separar (map f xs)) <> line) <>
     char close
+
+-- Adiciona virgulas entre os elementos
+separar :: [Doc] -> Doc
+separar [] = empty
+separar [x] = x
+separar (x:xs) = x <> char ',' <> line <> separar xs
 
 -- Escapa e formata uma string JSON.
 string :: String -> Doc
@@ -39,7 +48,18 @@ string s = char '"' <> hcat (map escapeChar s) <> char '"'
     escapeChar '\n' = text "\\n"
     escapeChar '\t' = text "\\t"
     escapeChar '\r' = text "\\r"
-    escapeChar c    = char c
+    escapeChar '\b' = text "\\b"
+    escapeChar '\f' = text "\\f"
+    escapeChar c
+        | c < ' '   = text ("\\u" ++ hex4 (fromEnum c))
+        | otherwise = char c
+
+    hex4 :: Int -> String
+    hex4 n =
+        let digits = "0123456789abcdef"
+            digit :: Int -> Char
+            digit i = digits !! ((n `div` (16 ^ i)) `mod` 16)
+        in map digit [3, 2, 1, 0]
 
 -- Formata um número (Double), evitando notação científica quando possível.
 double :: Double -> Doc
