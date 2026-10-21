@@ -1,7 +1,10 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+
 module PrettyJSON
     ( renderJValue
     ) where
-
+        
+import Prelude hiding ((<>))
 import SimpleJSON (JValue(..))
 import Prettify
 
