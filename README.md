@@ -149,6 +149,8 @@ Na execução realizada durante o desenvolvimento, todas as cinco propriedades p
 
 ## 9. Vídeo de apresentação
 
+- [https://drive.google.com/drive/folders/1VUwzCH2i3JtUK0mkZuV9-jN8WGSsH3xY?usp=sharing]
+
 A apresentação demonstra a estrutura do projeto, as principais funcionalidades, a execução dos testes e o funcionamento do Pretty Printer.
 
 **Link do vídeo:** 
@@ -161,4 +163,6 @@ A apresentação demonstra a estrutura do projeto, as principais funcionalidades
 
 ## 11. Repositório
 
-Código-fonte e histórico de desenvolvimento disponíveis
+Código-fonte e histórico de desenvolvimento disponíveis 
+
+- [https://github.com/hissa02/hs2json.git]
